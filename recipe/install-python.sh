@@ -1,9 +1,10 @@
 #!/bin/bash
+#
+# Configure, built, test, and install the Python language bindings
+# for a LALSuite subpackage.
+#
 
 set -e
-
-. activate "${PREFIX}"
-
 pushd ${SRC_DIR}
 
 # configure only python bindings and pure-python extras

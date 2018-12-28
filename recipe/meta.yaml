@@ -15,16 +15,16 @@ source:
     - python3-git_version.patch
 
 build:
-  number: 1000
+  number: 1001
   skip: true  # [win]
 
 requirements:
   build:
+    - {{ compiler('c') }}
     - pkg-config
     - make
-    - {{ compiler('c') }}
-  host:
     - swig >=3.0.7
+  host:
     - gsl
     - metaio
     - lal >=6.19.0
@@ -34,11 +34,15 @@ requirements:
 outputs:
   - name: lalburst
     script: install-c.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
+        - pkg-config
         - make
         - swig >=3.0.7
+      host:
         - gsl
         - metaio
         - lal >=6.19.0
@@ -54,7 +58,9 @@ outputs:
       commands:
         - lalburst_version --verbose
     about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
+      home: https://wiki.ligo.org/Computing/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
@@ -66,12 +72,15 @@ outputs:
 
   - name: python-lalburst
     script: install-python.sh
+    build:
+      activate_in_script: True
     requirements:
-      host:
+      build:
         - {{ compiler('c') }}
-        - make
         - pkg-config
+        - make
         - swig >=3.0.7
+      host:
         - {{ pin_subpackage('lalburst', exact=True) }}
         - python
         - numpy
@@ -104,7 +113,9 @@ outputs:
         - lalburst.snglcoinc
         - lalburst.timeslides
     about:
-      home: https://wiki.ligo.org/DASWG/LALSuite
+      home: https://wiki.ligo.org/Computing/DASWG/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
       license_file: COPYING
@@ -114,7 +125,7 @@ outputs:
         This package contains the python bindings.
 
 about:
-  home: https://wiki.ligo.org/DASWG/LALSuite
+  home: https://wiki.ligo.org/Computing/DASWG/LALSuite
   license: GPLv3
   license_family: GPL
   summary: LSC Algorithm Burst Library
