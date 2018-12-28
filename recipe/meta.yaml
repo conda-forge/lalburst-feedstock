@@ -87,6 +87,8 @@ outputs:
         - python-lal >=6.19.0
         - python-lalmetaio >=1.4.0
         - python-lalsimulation >=1.8.0
+        - lscsoft-glue
+        - scipy
       run:
         - {{ pin_subpackage('lalburst', exact=True) }}
         - python
@@ -95,6 +97,8 @@ outputs:
         - python-lalmetaio >=1.4.0
         - python-lalsimulation >=1.8.0
         - matplotlib
+        - lscsoft-glue
+        - scipy
     test:
       imports:
         - lalburst
