@@ -1,6 +1,9 @@
 #!/bin/bash
+#
+# Install the C libraries and SWIG interface files for
+# a LALSuite subpackage.
+#
 
 set -e
-
-source activate "${PREFIX}"
+pushd ${SRC_DIR}
 make install
