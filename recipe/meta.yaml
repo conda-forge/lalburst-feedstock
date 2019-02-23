@@ -30,45 +30,21 @@ requirements:
     - lal >=6.19.0
     - lalmetaio >=1.4.0
     - lalsimulation >=1.8.0
+  run:
+    - gsl
+    - metaio
+    - lal >=6.19.0
+    - lalmetaio >=1.4.0
+    - lalsimulation >=1.8.0
+
+test:
+  commands:
+    - lalburst_version --verbose
+    - conda inspect linkages -p ${PREFIX} ${PKG_NAME}  # [not win]
+    - conda inspect objects -p ${PREFIX} ${PKG_NAME}  # [osx]
 
 outputs:
   - name: lalburst
-    script: install-c.sh
-    build:
-      activate_in_script: True
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - pkg-config
-        - make
-        - swig >=3.0.7
-      host:
-        - gsl
-        - metaio
-        - lal >=6.19.0
-        - lalmetaio >=1.4.0
-        - lalsimulation >=1.8.0
-      run:
-        - gsl
-        - metaio
-        - lal >=6.19.0
-        - lalmetaio >=1.4.0
-        - lalsimulation >=1.8.0
-    test:
-      commands:
-        - lalburst_version --verbose
-    about:
-      home: https://wiki.ligo.org/Computing/DASWG/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
-      dev_url: https://git.ligo.org/lscsoft/lalsuite/
-      license: GPLv3
-      license_family: GPL
-      license_file: COPYING
-      summary: LSC Algorithm Burst Library
-      description: |
-        The LSC Algorithm Burst Library for gravitational wave data analysis.
-        This package contains the shared-object libraries needed to run
-        applications that use the LAL Burst library.
 
   - name: python-lalburst
     script: install-python.sh
@@ -116,6 +92,9 @@ outputs:
         - lalburst.snglcluster
         - lalburst.snglcoinc
         - lalburst.timeslides
+      commands:
+        - conda inspect linkages -p ${PREFIX} ${PKG_NAME}  # [not win]
+        - conda inspect objects -p ${PREFIX} ${PKG_NAME}  # [osx]
     about:
       home: https://wiki.ligo.org/Computing/DASWG/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
@@ -130,9 +109,16 @@ outputs:
 
 about:
   home: https://wiki.ligo.org/Computing/DASWG/LALSuite
+  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+  dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPLv3
   license_family: GPL
+  license_file: COPYING
   summary: LSC Algorithm Burst Library
+  description: |
+    The LSC Algorithm Burst Library for gravitational wave data analysis.
+    This package contains the shared-object libraries needed to run
+    applications that use the LAL Burst library.
 
 extra:
   recipe-maintainers:
