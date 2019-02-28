@@ -1,6 +1,13 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.0" %}
-{% set sha256 = "2918c61c8c767bfa1fc2d439e9b7ca15e0e7a186ec045a6b563f9dcb6c1a1ca2" %}
+{% set version = "1.5.1" %}
+{% set sha256 = "47ec9a977d53f0da727c9dc25572f40dab76d98702cab0eb35aa3d1668ce3088" %}
+
+# dependencies
+{% set lal_version = "6.19.2" %}
+{% set lalmetaio_version = "1.5.0" %}
+{% set lalsimulation_version = "1.8.2" %}
+{% set swig_version = "3.0.7" %}
+
 
 package:
   name: {{ name }}
@@ -10,32 +17,29 @@ source:
   fn: {{ name }}-{{ version }}.tar.xz
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    # patch relative imports of lalburst.git_version
-    - python3-git_version.patch
 
 build:
-  number: 1002
+  number: 0
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - pkg-config
     - make
-    - swig >=3.0.7
+    - pkg-config
+    - swig >={{ swig_version }}
   host:
     - gsl
+    - lal >={{ lal_version }}
+    - lalmetaio >={{ lalmetaio_version }}
+    - lalsimulation >={{ lalsimulation_version }}
     - metaio
-    - lal >=6.19.0
-    - lalmetaio >=1.4.0
-    - lalsimulation >=1.8.0
   run:
     - gsl
+    - lal >={{ lal_version }}
+    - lalmetaio >={{ lalmetaio_version }}
+    - lalsimulation >={{ lalsimulation_version }}
     - metaio
-    - lal >=6.19.0
-    - lalmetaio >=1.4.0
-    - lalsimulation >=1.8.0
 
 test:
   commands:
@@ -53,27 +57,29 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
-        - pkg-config
         - make
-        - swig >=3.0.7
+        - pkg-config
+        - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalburst', exact=True) }}
-        - python
+        - lscsoft-glue
         - numpy
-        - python-lal >=6.19.0
-        - python-lalmetaio >=1.4.0
-        - python-lalsimulation >=1.8.0
-        - lscsoft-glue <2.0a0
+        - python
+        - python-lal >={{ lal_version }}
+        - python-lalmetaio >={{ lalmetaio_version }}
+        - python-lalsimulation >={{ lalsimulation_version }}
         - scipy
       run:
         - {{ pin_subpackage('lalburst', exact=True) }}
-        - python
-        - {{ pin_compatible('numpy') }}
-        - python-lal >=6.19.0
-        - python-lalmetaio >=1.4.0
-        - python-lalsimulation >=1.8.0
+        - ligo-segments
+        - lscsoft-glue
         - matplotlib
-        - lscsoft-glue <2.0a0
+        - {{ pin_compatible('numpy') }}
+        - python
+        - python-lal >={{ lal_version }}
+        - python-lalmetaio >={{ lalmetaio_version }}
+        - python-lalsimulation >={{ lalsimulation_version }}
+        - python-ligo-lw
         - scipy
     test:
       imports:
@@ -97,7 +103,7 @@ outputs:
         - conda inspect objects -p ${PREFIX} ${PKG_NAME}  # [osx]
     about:
       home: https://wiki.ligo.org/Computing/DASWG/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalburst/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
@@ -109,7 +115,7 @@ outputs:
 
 about:
   home: https://wiki.ligo.org/Computing/DASWG/LALSuite
-  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+  doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalburst/
   dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPLv3
   license_family: GPL
@@ -118,7 +124,9 @@ about:
   description: |
     The LSC Algorithm Burst Library for gravitational wave data analysis.
     This package contains the shared-object libraries needed to run
-    applications that use the LAL Burst library.
+    applications that use the LAL Burst library.  If you want to install
+    the Python bindings, please install the associated python-lalburst
+    package.
 
 extra:
   recipe-maintainers:
