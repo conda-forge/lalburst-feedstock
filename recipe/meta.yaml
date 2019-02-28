@@ -101,7 +101,7 @@ outputs:
         - conda inspect objects -p ${PREFIX} ${PKG_NAME}  # [osx]
     about:
       home: https://wiki.ligo.org/Computing/DASWG/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+      doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalburst/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPLv3
       license_family: GPL
@@ -113,7 +113,7 @@ outputs:
 
 about:
   home: https://wiki.ligo.org/Computing/DASWG/LALSuite
-  doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+  doc_url: https://docs.ligo.org/lscsoft/lalsuite/lalburst/
   dev_url: https://git.ligo.org/lscsoft/lalsuite/
   license: GPLv3
   license_family: GPL
