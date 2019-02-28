@@ -71,6 +71,7 @@ outputs:
         - scipy
       run:
         - {{ pin_subpackage('lalburst', exact=True) }}
+        - ligo-segments
         - lscsoft-glue
         - matplotlib
         - {{ pin_compatible('numpy') }}
@@ -78,6 +79,7 @@ outputs:
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
         - python-lalsimulation >={{ lalsimulation_version }}
+        - python-ligo-lw
         - scipy
     test:
       imports:
