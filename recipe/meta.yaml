@@ -122,7 +122,9 @@ about:
   description: |
     The LSC Algorithm Burst Library for gravitational wave data analysis.
     This package contains the shared-object libraries needed to run
-    applications that use the LAL Burst library.
+    applications that use the LAL Burst library.  If you want to install
+    the Python bindings, please install the associated python-lalburst
+    package.
 
 extra:
   recipe-maintainers:
