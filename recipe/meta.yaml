@@ -19,7 +19,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -49,6 +49,9 @@ test:
 
 outputs:
   - name: lalburst
+    build:
+      run_exports:
+        - {{ pin_subpackage("lalburst", max_pin="x.x") }}
 
   - name: python-lalburst
     script: install-python.sh
