@@ -7,6 +7,9 @@
 set -e
 pushd ${SRC_DIR}
 
+# only link libraries we actually use
+export GSL_LIBS="-L${PREFIX}/lib -lgsl"
+
 # configure only python bindings and pure-python extras
 ./configure \
 	--prefix=$PREFIX \
