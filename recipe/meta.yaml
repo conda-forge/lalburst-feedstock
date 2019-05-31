@@ -1,11 +1,11 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.1" %}
-{% set sha256 = "47ec9a977d53f0da727c9dc25572f40dab76d98702cab0eb35aa3d1668ce3088" %}
+{% set version = "1.5.2" %}
+{% set sha256 = "f0c9077a544274aef05a4a88839a50bc737de141b4fb340e925d37db82ddcb47" %}
 
 # dependencies
-{% set lal_version = "6.19.2" %}
+{% set lal_version = "6.20.0" %}
 {% set lalmetaio_version = "1.5.0" %}
-{% set lalsimulation_version = "1.8.2" %}
+{% set lalsimulation_version = "1.9.0" %}
 {% set swig_version = "3.0.7" %}
 
 
@@ -17,18 +17,16 @@ source:
   fn: {{ name }}-{{ version }}.tar.xz
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    - pkgconfig.patch
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
     - make
-    - pkg-config
+    - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
     - gsl
@@ -63,12 +61,12 @@ outputs:
       build:
         - {{ compiler('c') }}
         - make
-        - pkg-config
+        - pkg-config >=0.18.0
         - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalburst', exact=True) }}
         - lscsoft-glue
-        - numpy
+        - numpy 1.9
         - python
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
@@ -76,9 +74,7 @@ outputs:
         - scipy
       run:
         - gsl
-        - lal
-        - lalmetaio
-        - lalsimulation
+        - lal >={{ lal_version }}
         - {{ pin_subpackage('lalburst', exact=True) }}
         - ligo-segments
         - lscsoft-glue
