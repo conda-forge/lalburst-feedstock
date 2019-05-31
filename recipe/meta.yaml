@@ -75,8 +75,6 @@ outputs:
       run:
         - gsl
         - lal >={{ lal_version }}
-        - lalmetaio >={{ lalmetaio_version }}
-        - lalsimulation >={{ lalsimulation_version }}
         - {{ pin_subpackage('lalburst', exact=True) }}
         - ligo-segments
         - lscsoft-glue
