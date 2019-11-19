@@ -68,21 +68,18 @@ outputs:
         - swig >={{ swig_version }}
       host:
         - {{ pin_subpackage('lalburst', exact=True) }}
-        #- lscsoft-glue
         - numpy
         - python
-        #- python-lal >={{ lal_version }}
-        #- python-lalmetaio >={{ lalmetaio_version }}
-        #- python-lalsimulation >={{ lalsimulation_version }}
-        #- scipy
       run:
         - gsl
         - lal >={{ lal_version }}
+        - lalmetaio  # [linux]
+        - lalsimulation  # [linux]
         - {{ pin_subpackage('lalburst', exact=True) }}
         - ligo-segments
         - lscsoft-glue
         - matplotlib-base
-        - metaio
+        - metaio  # [linux]
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
