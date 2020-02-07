@@ -9,7 +9,7 @@ channel_targets:
 docker_image:
 - condaforge/linux-anvil-comp7
 gsl:
-- '2.5'
+- '2.6'
 numpy:
 - '1.14'
 pin_run_as_build:
