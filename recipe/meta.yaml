@@ -6,7 +6,7 @@
 {% set lal_version = "6.21.0" %}
 {% set lalmetaio_version = "1.6.0" %}
 {% set lalsimulation_version = "1.10.0" %}
-{% set swig_version = "3.0.7" %}
+{% set swig_version = "3.0.9" %}
 
 
 package:
@@ -20,7 +20,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
@@ -60,6 +60,8 @@ outputs:
     build:
       error_overdepending: true
       error_overlinking: true
+      ignore_run_exports:
+        - python
     requirements:
       build:
         - {{ compiler('c') }}
