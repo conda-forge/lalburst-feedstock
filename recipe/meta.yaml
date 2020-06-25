@@ -3,11 +3,10 @@
 {% set sha256 = "8784e9aefd780ae130a1f99c7d2c7f678970ab72fc096eb8636e1c04089e813f" %}
 
 # dependencies
-{% set lal_version = "6.21.0" %}
+{% set lal_version = "7.0.0" %}
 {% set lalmetaio_version = "1.6.0" %}
-{% set lalsimulation_version = "1.10.0" %}
+{% set lalsimulation_version = "2.1.0" %}
 {% set swig_version = "3.0.9" %}
-
 
 package:
   name: {{ name|lower }}
@@ -109,8 +108,6 @@ outputs:
         - lalburst.stringutils
         - lalburst.timeslides
       requires:
-        - mock  # [py<33]
-        - pathlib  # [py<34]
         - pytest >=4.0.0a0
       source_files:
         - test/python
