@@ -3,9 +3,9 @@
 {% set sha256 = "b52e04ac682d105b765bec24128c5e85e7abeb5fd7936811f49d559dd9e173ab" %}
 
 # dependencies
-{% set lal_version = "7.0.0" %}
-{% set lalmetaio_version = "1.6.0" %}
-{% set lalsimulation_version = "2.1.0" %}
+{% set lal_version = "7.1.0" %}
+{% set lalmetaio_version = "2.0.0" %}
+{% set lalsimulation_version = "2.3.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
