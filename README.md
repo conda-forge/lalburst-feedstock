@@ -7,17 +7,15 @@ Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalburst-feedstock/blob/master/LICENSE.txt)
 
-Summary: LSC Algorithm Burst Library
+Summary: LSC Algorithm Burst Library shared object libraries
 
 Development: https://git.ligo.org/lscsoft/lalsuite/
 
-Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalframe/
 
 The LSC Algorithm Burst Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
-applications that use the LAL Burst library.  If you want to install
-the Python bindings, please install the associated python-lalburst
-package.
+applications that use the LAL Burst library.
 
 
 Current build status
@@ -65,6 +63,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lalburst-green.svg)](https://anaconda.org/conda-forge/lalburst) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lalburst.svg)](https://anaconda.org/conda-forge/lalburst) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lalburst.svg)](https://anaconda.org/conda-forge/lalburst) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lalburst.svg)](https://anaconda.org/conda-forge/lalburst) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-liblalburst-green.svg)](https://anaconda.org/conda-forge/liblalburst) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/liblalburst.svg)](https://anaconda.org/conda-forge/liblalburst) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/liblalburst.svg)](https://anaconda.org/conda-forge/liblalburst) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/liblalburst.svg)](https://anaconda.org/conda-forge/liblalburst) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-python--lalburst-green.svg)](https://anaconda.org/conda-forge/python-lalburst) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lalburst.svg)](https://anaconda.org/conda-forge/python-lalburst) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lalburst.svg)](https://anaconda.org/conda-forge/python-lalburst) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lalburst.svg)](https://anaconda.org/conda-forge/python-lalburst) |
 
 Installing lalburst
@@ -76,10 +75,10 @@ Installing `lalburst` from the `conda-forge` channel can be achieved by adding `
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `lalburst, python-lalburst` can be installed with:
+Once the `conda-forge` channel has been enabled, `lalburst, liblalburst, python-lalburst` can be installed with:
 
 ```
-conda install lalburst python-lalburst
+conda install lalburst liblalburst python-lalburst
 ```
 
 It is possible to list all of the versions of `lalburst` available on your platform with:
