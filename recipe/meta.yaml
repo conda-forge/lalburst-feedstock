@@ -1,15 +1,15 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.7" %}
+{% set version = "1.5.7".replace('-', '.') %}
 {% set sha256 = "04460dec9795cf30dc0b09296d64f3a8a5f4a40b70a537fdc4a43d2b6310bcff" %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
 {% set lalmetaio_version = "2.0.0" %}
-{% set lalsimulation_version = "2.3.0" %}
-{% set swig_version = "3.0.9" %}
+{% set lalsimulation_version = "2.5.0" %}
+{% set swig_version = "3.0.10" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}-split
   version: {{ version }}
 
 source:
@@ -25,34 +25,57 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - help2man >=1.37
     - make
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
     - gsl
-    - lal >={{ lal_version }}
-    - lalmetaio >={{ lalmetaio_version }}
-    - lalsimulation >={{ lalsimulation_version }}
+    - liblal >={{ lal_version }}
+    - liblalmetaio >={{ lalmetaio_version }}
+    - liblalsimulation >={{ lalsimulation_version }}
     - metaio
-  run:
-    - gsl
-    - lal >={{ lal_version }}
-    - lalmetaio >={{ lalmetaio_version }}
-    - lalsimulation >={{ lalsimulation_version }}
-    - metaio
-
-test:
-  requires:
-    - pkg-config  # [unix]
-  commands:
-    - lalburst_version --verbose
-    - test "$(pkg-config --modversion ${PKG_NAME})" == "${PKG_VERSION}"  # [unix]
 
 outputs:
-  - name: lalburst
+  - name: liblalburst
+    script: install-lib.sh
     build:
       run_exports:
-        - {{ pin_subpackage("lalburst", max_pin="x.x") }}
+        - {{ pin_subpackage("liblalburst", max_pin="x") }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - make
+        - swig >={{ swig_version }}
+      host:
+        - gsl
+        - liblal >={{ lal_version }}
+        - liblalmetaio >={{ lalmetaio_version }}
+        - liblalsimulation >={{ lalsimulation_version }}
+        - metaio
+      run:
+        - gsl
+        - liblal >={{ lal_version }}
+        - liblalmetaio >={{ lalmetaio_version }}
+        - liblalsimulation >={{ lalsimulation_version }}
+        - metaio
+    test:
+      requires:
+        - pkg-config
+      commands:
+        - test $(pkg-config --modversion --print-errors lalburst) == "${PKG_VERSION}"
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalframe/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Burst Library shared object libraries
+      description: |
+        The LSC Algorithm Burst Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL Burst library.
 
   - name: python-lalburst
     script: install-python.sh
@@ -60,6 +83,7 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
+        # ignore run_exports from python's recipe
         - python
     requirements:
       build:
@@ -68,18 +92,23 @@ outputs:
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
       host:
-        - {{ pin_subpackage('lalburst', exact=True) }}
+        - {{ pin_subpackage('liblalburst', exact=True) }}
+        - lscsoft-glue
         - numpy
         - python
+        - python-lal >={{ lal_version }}
+        - python-lalmetaio >={{ lalmetaio_version }}
+        - python-lalsimulation >={{ lalsimulation_version }}
+        - scipy
       run:
-        - gsl
-        - lal >={{ lal_version }}
-        - lalmetaio  # [linux]
-        - lalsimulation  # [linux]
-        - {{ pin_subpackage('lalburst', exact=True) }}
+        - gsl  # [linux]
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalburst', exact=True) }}
+        - liblalmetaio  # [linux]
+        - liblalsimulation  # [linux]
         - ligo-segments
         - lscsoft-glue
-        - matplotlib-base
+        - matplotlib
         - metaio  # [linux]
         - {{ pin_compatible('numpy') }}
         - python
@@ -89,6 +118,12 @@ outputs:
         - python-ligo-lw
         - scipy
     test:
+      requires:
+        - pytest >=4.0.0a0
+      source_files:
+        - test/python
+      commands:
+        - python -m pytest -rs -v test/python
       imports:
         - lalburst
         - lalburst.SimBurstUtils
@@ -101,18 +136,47 @@ outputs:
         - lalburst.calc_likelihood
         - lalburst.cs_gamma
         - lalburst.date
-        - lalburst.offsetvector
         - lalburst.packing
         - lalburst.snglcluster
         - lalburst.snglcoinc
-        - lalburst.stringutils
         - lalburst.timeslides
-      requires:
-        - pytest >=4.0.0a0
-      source_files:
-        - test/python
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Burst Library python python bindings
+      description: |
+        The LSC Algorithm Burst Library for gravitational wave data analysis.
+        This package contains the python bindings.
+
+  - name: lalburst
+    script: install-bin.sh
+    build:
+      error_overdepending: true
+      error_overlinking: true
+      ignore_run_exports:
+        - python
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - make
+      host:
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalburst', exact=True) }}
+        - python
+      run:
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalburst', exact=True) }}
+        - python
+        - {{ pin_subpackage('python-lalburst', exact=True) }}
+    test:
       commands:
-        - pushd test/python; python -m pytest -v; popd
+        - lalburst_version --verbose
+      imports:
+        - lalburst
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
@@ -123,7 +187,6 @@ outputs:
       summary: LSC Algorithm Burst Library
       description: |
         The LSC Algorithm Burst Library for gravitational wave data analysis.
-        This package contains the python bindings.
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
@@ -135,12 +198,9 @@ about:
   summary: LSC Algorithm Burst Library
   description: |
     The LSC Algorithm Burst Library for gravitational wave data analysis.
-    This package contains the shared-object libraries needed to run
-    applications that use the LAL Burst library.  If you want to install
-    the Python bindings, please install the associated python-lalburst
-    package.
 
 extra:
+  feedstock-name: lalburst
   recipe-maintainers:
     - duncanmmacleod
     - skymoo

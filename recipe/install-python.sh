@@ -5,31 +5,29 @@
 #
 
 set -e
-pushd ${SRC_DIR}
+
+# build python in a sub-directory using a copy of the C build
+_builddir="_build${PY_VER}"
+cp -r _build ${_builddir}
+cd ${_builddir}
 
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
 # configure only python bindings and pure-python extras
-./configure \
-	--prefix=$PREFIX \
-	--disable-swig-iface \
-	--enable-swig-python \
-	--enable-python \
+${SRC_DIR}/configure \
 	--disable-doxygen \
 	--disable-gcc-flags \
-	--enable-silent-rules || { cat config.log; exit 1; }
+	--disable-swig-iface \
+	--enable-python \
+	--enable-swig-python \
+	--prefix=$PREFIX \
+;
 
 # build
-make -j ${CPU_COUNT} -C swig
-make -j ${CPU_COUNT} -C python
-
-# test | DMM: exclude checks when only building python,
-#             there's some sort of problem
-#make -j ${CPU_COUNT} -C test check
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python
 
 # install
-make -j ${CPU_COUNT} -C swig install-exec-am  # swig bindings
-make -j ${CPU_COUNT} -C python install  # pure-python extras
-
-popd
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install  # pure-python extras
