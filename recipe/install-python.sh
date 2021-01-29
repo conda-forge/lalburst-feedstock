@@ -24,9 +24,12 @@ ${SRC_DIR}/configure \
 	--prefix=$PREFIX \
 ;
 
+# patch out dependency_libs from libtool archive to prevent overlinking
+sed -i.tmp '/^dependency_libs/d' lib/lib${PKG_NAME##*-}.la
+
 # build
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig LIBS=""
+make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python LIBS=""
 
 # install
 make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
