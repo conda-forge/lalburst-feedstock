@@ -1,0 +1,13 @@
+--- python/lalburst/Makefile.in 2021-01-27 16:14:40.047687670 +0000
++++ python/lalburst/Makefile.in 2021-01-30 00:16:38.570000000 +0000
+@@ -495,8 +495,8 @@
+
+ @HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_SOURCES = cs_gamma.c
+ @HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_CPPFLAGS = $(AM_CPPFLAGS) $(SWIG_PYTHON_CPPFLAGS)
+-@HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_CFLAGS = $(AM_CFLAGS) $(SWIG_PYTHON_CFLAGS) $(GSL_CFLAGS) $(LAL_CFLAGS) -Wno-cast-qual
+-@HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_LDFLAGS = $(top_builddir)/lib/liblalburst.la $(AM_LDFLAGS) $(LIBS) $(GSL_LIBS) $(LAL_LIBS) -module -avoid-version
++@HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_CFLAGS = $(AM_CFLAGS) $(SWIG_PYTHON_CFLAGS) $(GSL_CFLAGS) -Wno-cast-qual
++@HAVE_PYTHON_TRUE@@SWIG_BUILD_PYTHON_TRUE@cs_gamma_la_LDFLAGS = $(top_builddir)/lib/liblalburst.la $(AM_LDFLAGS) $(GSL_LIBS) -module -avoid-version
+ all: $(BUILT_SOURCES)
+        $(MAKE) $(AM_MAKEFLAGS) all-am
+
