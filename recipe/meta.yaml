@@ -164,6 +164,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
       host:
         - liblal >={{ lal_version }}
