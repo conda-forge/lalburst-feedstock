@@ -1,5 +1,5 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.7".replace('-', '.') %}
+{% set version = "1.5.7" %}
 {% set sha256 = "04460dec9795cf30dc0b09296d64f3a8a5f4a40b70a537fdc4a43d2b6310bcff" %}
 
 # dependencies
@@ -21,7 +21,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -61,6 +61,9 @@ outputs:
         - liblalmetaio >={{ lalmetaio_version }}
         - liblalsimulation >={{ lalsimulation_version }}
         - metaio
+      run_constrained:
+        - lalburst >=1.5.7
+        - python-lalburst >=1.5.7
     test:
       requires:
         - pkg-config
@@ -90,6 +93,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
@@ -116,6 +120,8 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}
         - python-ligo-lw
         - scipy
+        # swig bindings cause segmentation fault
+        - numpy <1.20.0a0
     test:
       requires:
         - pytest >=4.0.0a0
@@ -161,6 +167,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
       host:
         - liblal >={{ lal_version }}
