@@ -1,5 +1,5 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.7".replace('-', '.') %}
+{% set version = "1.5.7" %}
 {% set sha256 = "04460dec9795cf30dc0b09296d64f3a8a5f4a40b70a537fdc4a43d2b6310bcff" %}
 
 # dependencies
