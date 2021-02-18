@@ -1,6 +1,6 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.7" %}
-{% set sha256 = "04460dec9795cf30dc0b09296d64f3a8a5f4a40b70a537fdc4a43d2b6310bcff" %}
+{% set version = "1.5.8" %}
+{% set sha256 = "74493cf3f19d00d4413bd1c91ac4041aa1e2338e5b059fc4508b40ad57bd5d98" %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
@@ -21,7 +21,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
