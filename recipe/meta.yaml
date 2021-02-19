@@ -66,7 +66,12 @@ outputs:
       requires:
         - pkg-config
       commands:
-        - test $(pkg-config --modversion --print-errors lalburst) == "${PKG_VERSION}"
+        # check library
+        - test -f ${PREFIX}/lib/liblalburst${SHLIB_EXT}  # [unix]
+        # check activate variables
+        - test "${LALBURST_DATADIR}" = "${PREFIX}/share/lalburst"  # [unix]
+        # check pkg-config
+        - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalburst
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalframe/
@@ -118,8 +123,6 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}
         - python-ligo-lw
         - scipy
-        # swig bindings cause segmentation fault
-        - numpy <1.20.0a0
     test:
       requires:
         - pytest >=4.0.0a0
@@ -150,10 +153,15 @@ outputs:
       license: GPL-2.0-or-later
       license_family: GPL
       license_file: COPYING
-      summary: LSC Algorithm Burst Library python python bindings
+      summary: LSC Algorithm Burst Library Python bindings
       description: |
         The LSC Algorithm Burst Library for gravitational wave data analysis.
-        This package contains the python bindings.
+        This package contains the Python bindings of the LALBurst C libraries
+        and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the [`lalburst`](/conda-forge/lalburst) package.
 
   - name: lalburst
     script: install-bin.sh
