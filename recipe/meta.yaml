@@ -15,8 +15,6 @@ package:
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    - cs_gamma-no-lal.patch
 
 build:
   error_overdepending: true
