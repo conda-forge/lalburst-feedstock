@@ -74,7 +74,7 @@ outputs:
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalburst
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
-      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalframe/
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
       dev_url: https://git.ligo.org/lscsoft/lalsuite/
       license: GPL-2.0-or-later
       license_family: GPL
