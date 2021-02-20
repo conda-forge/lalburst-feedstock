@@ -161,7 +161,7 @@ outputs:
 
         Note: this package only provides the importable Python libraries.
         All command-line interfaces, scripts, and executables are
-        part of the [`lalburst`](/conda-forge/lalburst) package.
+        part of the `lalburst` package.
 
   - name: lalburst
     script: install-bin.sh
