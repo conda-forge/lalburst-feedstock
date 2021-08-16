@@ -1,11 +1,11 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.8" %}
-{% set sha256 = "74493cf3f19d00d4413bd1c91ac4041aa1e2338e5b059fc4508b40ad57bd5d98" %}
+{% set version = "1.5.9" %}
+{% set sha256 = "671e6b429b08292e1e78a5b80ef1e1ae91f3481acda9940e99ec075e9f3c0c6c" %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
 {% set lalmetaio_version = "2.0.0" %}
-{% set lalsimulation_version = "2.5.0" %}
+{% set lalsimulation_version = "3.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -110,6 +110,7 @@ outputs:
         - python-lalmetaio >={{ lalmetaio_version }}
         - python-lalsimulation >={{ lalsimulation_version }}
         - scipy
+        - tqdm
       run:
         - gsl
         - {{ pin_subpackage('liblalburst', exact=True) }}
@@ -121,8 +122,9 @@ outputs:
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
         - python-lalsimulation >={{ lalsimulation_version }}
-        - python-ligo-lw
+        - python-ligo-lw >=1.7.0
         - scipy
+        - tqdm
     test:
       requires:
         - pytest >=4.0.0a0
