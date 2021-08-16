@@ -9,13 +9,13 @@ channel_sources:
 channel_targets:
 - conda-forge main
 gsl:
-- '2.6'
+- '2.7'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.16'
-- '1.16'
-- '1.16'
+- '1.18'
+- '1.18'
+- '1.18'
 - '1.19'
 pin_run_as_build:
   python:
