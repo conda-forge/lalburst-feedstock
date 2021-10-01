@@ -24,10 +24,6 @@ build:
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - numpy                                  # [build_platform != target_platform]
-    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - help2man >=1.37
     - make
@@ -104,6 +100,10 @@ outputs:
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
+        # extras for cross compiling
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - gsl
         - {{ pin_subpackage('liblalburst', exact=True) }}
