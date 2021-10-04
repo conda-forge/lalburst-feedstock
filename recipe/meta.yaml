@@ -15,6 +15,9 @@ package:
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
+  patches:
+    # patches for cross compilation
+    - no-gsl_version-check.patch  # [build_platform != target_ploatform]
 
 build:
   error_overdepending: true
@@ -100,6 +103,10 @@ outputs:
         - make
         - pkg-config >=0.18.0
         - swig >={{ swig_version }}
+        # extras for cross compiling
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - gsl
         - {{ pin_subpackage('liblalburst', exact=True) }}
@@ -177,6 +184,7 @@ outputs:
         - {{ compiler('c') }}
         - help2man >=1.37
         - make
+        - sed
       host:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalburst', exact=True) }}
