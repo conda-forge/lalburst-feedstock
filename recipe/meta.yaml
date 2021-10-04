@@ -184,6 +184,7 @@ outputs:
         - {{ compiler('c') }}
         - help2man >=1.37
         - make
+        - sed
       host:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalburst', exact=True) }}
