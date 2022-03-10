@@ -1,6 +1,6 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.11" %}
-{% set sha256 = "6b519e59e798c98904b2962038990013b0de6a3cf7984cad72db903c57e04851" %}
+{% set version = "1.5.12" %}
+{% set sha256 = "fe5d5979024fd674cb19ecb447659e0914e76b129bcb9d97ae3ad3066d7d81b9" %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
