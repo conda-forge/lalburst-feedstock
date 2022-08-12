@@ -2,6 +2,8 @@
 
 set -e
 
+_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+
 # use out-of-tree build
 mkdir -pv _build
 cd _build
@@ -22,9 +24,9 @@ ${SRC_DIR}/configure \
 ;
 
 # build
-make -j ${CPU_COUNT} V=1 VERBOSE=1
+${_make}
 
 # test
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
-	make -j ${CPU_COUNT} V=1 VERBOSE=1 check
+	${_make} check
 fi

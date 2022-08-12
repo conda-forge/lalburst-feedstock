@@ -1,11 +1,10 @@
 {% set name = "lalburst" %}
-{% set version = "1.5.12" %}
-{% set sha256 = "fe5d5979024fd674cb19ecb447659e0914e76b129bcb9d97ae3ad3066d7d81b9" %}
+{% set version = "1.6.0" %}
 
 # dependencies
-{% set lal_version = "7.1.0" %}
-{% set lalmetaio_version = "2.1.0" %}
-{% set lalsimulation_version = "3.1.0" %}
+{% set lal_version = "7.2.0" %}
+{% set lalmetaio_version = "3.0.0" %}
+{% set lalsimulation_version = "4.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -13,8 +12,8 @@ package:
   version: {{ version }}
 
 source:
-  url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: {{ sha256 }}
+  url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
+  sha256: f293564c983ea72833daacb9140c940e10b769a252fb101ef2f2ce72c70c21a7
 
 build:
   error_overdepending: true
@@ -68,8 +67,6 @@ outputs:
       commands:
         # check library
         - test -f ${PREFIX}/lib/liblalburst${SHLIB_EXT}  # [unix]
-        # check activate variables
-        - test "${LALBURST_DATADIR}" = "${PREFIX}/share/lalburst"  # [unix]
         # check pkg-config
         - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalburst
     about:
@@ -148,9 +145,12 @@ outputs:
         - lalburst.calc_likelihood
         - lalburst.cs_gamma
         - lalburst.date
+        - lalburst.offsetvector
         - lalburst.packing
+        - lalburst.power
         - lalburst.snglcluster
         - lalburst.snglcoinc
+        - lalburst.stringutils
         - lalburst.timeslides
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
@@ -189,10 +189,22 @@ outputs:
       run:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalburst', exact=True) }}
+        - pillow
         - python
         - {{ pin_subpackage('python-lalburst', exact=True) }}
     test:
       commands:
+        - lalburst_cluster --help
+        - lalburst_coinc --help
+        - lalburst_cut --help
+        - lalburst_injfind --help
+        - lalburst_inj_pic --help
+        - lalburst_plot_tisi --help
+        - lalburst_power_calc_likelihood --help
+        - lalburst_power_final --help
+        - lalburst_power_meas_likelihood --help
+        - lalburst_power_plot_binj --help
+        - lalburst_power_plot_binjtf --help
         - lalburst_version --verbose
       imports:
         - lalburst

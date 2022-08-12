@@ -6,6 +6,8 @@
 
 set -e
 
+_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+
 # build python in a sub-directory using a copy of the C build
 _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
@@ -29,9 +31,9 @@ ${SRC_DIR}/configure \
 sed -i.tmp '/^dependency_libs/d' lib/lib${PKG_NAME##*-}.la
 
 # build
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig LIBS=""
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python LIBS=""
+${_make} -C swig LIBS=""
+${_make} -C python LIBS=""
 
 # install
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C swig install-exec  # swig bindings
-make -j ${CPU_COUNT} V=1 VERBOSE=1 -C python install  # pure-python extras
+${_make} -C swig install-exec  # swig bindings
+${_make} -C python install  # pure-python extras
