@@ -83,7 +83,7 @@ outputs:
         applications that use the LAL Burst library.
 
   - name: python-lalburst
-    script: install-python.sh
+    script: build-python.sh
     build:
       error_overdepending: true
       error_overlinking: true
