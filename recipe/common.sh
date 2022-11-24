@@ -19,6 +19,7 @@ export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 CONFIGURE_ARGS="
   --disable-doxygen
   --disable-gcc-flags
+  --disable-static
   --disable-swig-octave
   --prefix=${PREFIX}
 "
