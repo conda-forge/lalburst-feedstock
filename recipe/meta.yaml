@@ -18,7 +18,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -33,7 +33,7 @@ requirements:
     - liblal >={{ lal_version }}
     - liblalmetaio >={{ lalmetaio_version }}
     - liblalsimulation >={{ lalsimulation_version }}
-    - metaio
+    - libmetaio
 
 outputs:
   - name: liblalburst
@@ -51,13 +51,13 @@ outputs:
         - liblal >={{ lal_version }}
         - liblalmetaio >={{ lalmetaio_version }}
         - liblalsimulation >={{ lalsimulation_version }}
-        - metaio
+        - libmetaio
       run:
         - gsl
         - liblal >={{ lal_version }}
         - liblalmetaio >={{ lalmetaio_version }}
         - liblalsimulation >={{ lalsimulation_version }}
-        - metaio
+        - libmetaio
       run_constrained:
         - lalburst >=1.5.7
         - python-lalburst >=1.5.7
@@ -83,7 +83,7 @@ outputs:
         applications that use the LAL Burst library.
 
   - name: python-lalburst
-    script: install-python.sh
+    script: build-python.sh
     build:
       error_overdepending: true
       error_overlinking: true
