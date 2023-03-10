@@ -2,10 +2,10 @@
 {% set version = "2.0.0" %}
 
 # dependencies
-{% set lal_version = "7.2.2" %}
-{% set lalmetaio_version = "3.0.0" %}
-{% set lalsimulation_version = "4.0.0" %}
-{% set swig_version = "3.0.10,<4.1.0a0" %}
+{% set lal_version = "7.3.0" %}
+{% set lalmetaio_version = "4.0.0" %}
+{% set lalsimulation_version = "5.0.0" %}
+{% set swig_version = "3.0.10" %}
 
 package:
   name: {{ name }}-split
