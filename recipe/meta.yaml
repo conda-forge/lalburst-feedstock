@@ -1,11 +1,11 @@
 {% set name = "lalburst" %}
-{% set version = "1.7.0" %}
+{% set version = "2.0.0" %}
 
 # dependencies
-{% set lal_version = "7.2.2" %}
-{% set lalmetaio_version = "3.0.0" %}
-{% set lalsimulation_version = "4.0.0" %}
-{% set swig_version = "3.0.10,<4.1.0a0" %}
+{% set lal_version = "7.3.0" %}
+{% set lalmetaio_version = "4.0.0" %}
+{% set lalsimulation_version = "5.0.0" %}
+{% set swig_version = "3.0.10" %}
 
 package:
   name: {{ name }}-split
@@ -13,12 +13,12 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 562fd50d098238c888e3d3d1577080a00c7d85d04ea0baaccece7c21b05468b4
+  sha256: cf82cda61d3b2473d7c1ae06993ed9ad91c82cb9e509a7422b429aefa52b1840
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -33,7 +33,6 @@ requirements:
     - liblal >={{ lal_version }}
     - liblalmetaio >={{ lalmetaio_version }}
     - liblalsimulation >={{ lalsimulation_version }}
-    - libmetaio
 
 outputs:
   - name: liblalburst
@@ -51,13 +50,11 @@ outputs:
         - liblal >={{ lal_version }}
         - liblalmetaio >={{ lalmetaio_version }}
         - liblalsimulation >={{ lalsimulation_version }}
-        - libmetaio
       run:
         - gsl
         - liblal >={{ lal_version }}
         - liblalmetaio >={{ lalmetaio_version }}
         - liblalsimulation >={{ lalsimulation_version }}
-        - libmetaio
       run_constrained:
         - lalburst >=1.5.7
         - python-lalburst >=1.5.7
