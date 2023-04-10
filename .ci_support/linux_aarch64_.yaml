@@ -19,8 +19,8 @@ gsl:
 numpy:
 - '1.21'
 - '1.23'
-- '1.20'
-- '1.20'
+- '1.21'
+- '1.21'
 pin_run_as_build:
   python:
     min_pin: x.x
