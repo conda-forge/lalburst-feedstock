@@ -4,7 +4,7 @@
 # dependencies
 {% set lal_version = "7.3.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "5.0.0" %}
+{% set lalsimulation_version = "5.1.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
