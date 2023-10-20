@@ -1,5 +1,5 @@
 {% set name = "lalburst" %}
-{% set version = "2.0.1" %}
+{% set version = "2.0.2" %}
 
 # dependencies
 {% set lal_version = "7.3.0" %}
@@ -13,7 +13,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 69cdb9a7d654cc1f4dcb46a278ee50750547dc6a63313cc928a3cdb6cc84a02a
+  sha256: cd8a04aa231bda467e756c491457417b377dc15e104c0e8b6ffd999cd2f04ccc
 
 build:
   error_overdepending: true
