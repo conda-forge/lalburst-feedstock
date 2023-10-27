@@ -1,7 +1,7 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '11'
+- '12'
 cdt_name:
 - cos6
 channel_sources:
@@ -13,10 +13,10 @@ docker_image:
 gsl:
 - '2.7'
 numpy:
-- '1.21'
+- '1.22'
 - '1.23'
-- '1.21'
-- '1.21'
+- '1.22'
+- '1.22'
 pin_run_as_build:
   python:
     min_pin: x.x

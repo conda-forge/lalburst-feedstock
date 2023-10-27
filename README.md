@@ -3,6 +3,7 @@ About lalburst-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalburst-feedstock/blob/main/LICENSE.txt)
 
+
 About lalburst
 --------------
 
@@ -17,6 +18,7 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
 
 The LSC Algorithm Burst Library for gravitational wave data analysis.
+
 
 About liblalburst
 -----------------
@@ -34,6 +36,7 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
 The LSC Algorithm Burst Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
 applications that use the LAL Burst library.
+
 
 About python-lalburst
 ---------------------
