@@ -27,6 +27,7 @@ requirements:
     - help2man >=1.37
     - make
     - pkg-config >=0.18.0
+    - python >=3.5
     - swig >={{ swig_version }}
   host:
     - gsl
