@@ -16,7 +16,6 @@ source:
   sha256: 32b841d0c65af791c9000b20f0790680cde1e74ebf8e5799d6b1fad4a2419b06
 
 build:
-  error_overdepending: true
   error_overlinking: true
   number: 1
   skip: true  # [win]
@@ -83,10 +82,8 @@ outputs:
   - name: python-lalburst
     script: build-python.sh
     build:
-      error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - numpy
         - python
     requirements:
       build:
@@ -116,7 +113,7 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - matplotlib-base
-        - {{ pin_compatible('numpy') }}
+        - numpy
         - python
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
@@ -170,10 +167,7 @@ outputs:
   - name: lalburst
     script: install-bin.sh
     build:
-      error_overdepending: true
       error_overlinking: true
-      ignore_run_exports:
-        - python
     requirements:
       build:
         - {{ compiler('c') }}
