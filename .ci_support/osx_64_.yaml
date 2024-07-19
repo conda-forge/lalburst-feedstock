@@ -1,5 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '10.13'
+MACOSX_SDK_VERSION:
+- '10.13'
 c_compiler:
 - clang
 c_compiler_version:
@@ -7,7 +9,7 @@ c_compiler_version:
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
-- '10.9'
+- '10.13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -17,11 +19,11 @@ gsl:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
+- '2.0'
+- '2.0'
+- '2.0'
 - '1.22'
-- '1.23'
-- '1.26'
-- '1.22'
-- '1.22'
+- '2.0'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -35,7 +37,5 @@ python:
 target_platform:
 - osx-64
 zip_keys:
-- - c_stdlib_version
-  - MACOSX_DEPLOYMENT_TARGET
 - - python
   - numpy

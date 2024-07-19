@@ -16,14 +16,14 @@ source:
   sha256: 32b841d0c65af791c9000b20f0790680cde1e74ebf8e5799d6b1fad4a2419b06
 
 build:
-  error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - help2man >=1.37
     - make
     - pkg-config >=0.18.0
@@ -44,6 +44,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - make
         - swig >={{ swig_version }}
       host:
@@ -83,14 +84,15 @@ outputs:
   - name: python-lalburst
     script: build-python.sh
     build:
-      error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - numpy
         - python
+      # astropy (for python-lalsimulation) is incompatible with numpy 2 on Python < 3.10
+      skip: true  # [py==39]
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
@@ -116,7 +118,7 @@ outputs:
         - ligo-segments
         - lscsoft-glue
         - matplotlib-base
-        - {{ pin_compatible('numpy') }}
+        - numpy
         - python
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
@@ -170,13 +172,13 @@ outputs:
   - name: lalburst
     script: install-bin.sh
     build:
-      error_overdepending: true
       error_overlinking: true
-      ignore_run_exports:
-        - python
+      # astropy (for python-lalsimulation) is incompatible with numpy 2 on Python < 3.10
+      skip: true  # [py==39]
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - help2man >=1.37
         - make
         - sed
