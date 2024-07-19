@@ -23,6 +23,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - help2man >=1.37
     - make
     - pkg-config >=0.18.0
@@ -43,6 +44,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - make
         - swig >={{ swig_version }}
       host:
@@ -90,6 +92,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
@@ -175,6 +178,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib('c') }}
         - help2man >=1.37
         - make
         - sed
