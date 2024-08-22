@@ -2,9 +2,9 @@
 {% set version = "2.0.5" %}
 
 # dependencies
-{% set lal_version = "7.5.0" %}
+{% set lal_version = "7.6.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "5.4.0" %}
+{% set lalsimulation_version = "6.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -85,8 +85,6 @@ outputs:
     script: build-python.sh
     build:
       error_overlinking: true
-      ignore_run_exports:
-        - python
       # astropy (for python-lalsimulation) is incompatible with numpy 2 on Python < 3.10
       skip: true  # [py==39]
     requirements:
