@@ -2,9 +2,9 @@
 {% set version = "2.0.7" %}
 
 # dependencies
-{% set lal_version = "7.6.0" %}
+{% set lal_version = "7.7.0" %}
 {% set lalmetaio_version = "4.0.0" %}
-{% set lalsimulation_version = "6.1.0" %}
+{% set lalsimulation_version = "6.2.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -112,6 +112,7 @@ outputs:
         - tqdm
       run:
         - gsl
+        - igwn-ligolw >=2.1.0
         - {{ pin_subpackage('liblalburst', exact=True) }}
         - ligo-segments
         - lscsoft-glue
@@ -121,7 +122,6 @@ outputs:
         - python-lal >={{ lal_version }}
         - python-lalmetaio >={{ lalmetaio_version }}
         - python-lalsimulation >={{ lalsimulation_version }}
-        - python-ligo-lw >=1.7.0
         - scipy
         - tqdm
     test:
