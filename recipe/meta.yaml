@@ -17,7 +17,7 @@ source:
 
 build:
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -113,8 +113,8 @@ outputs:
       run:
         - gsl
         - igwn-ligolw >=2.1.0
+        - igwn-segments
         - {{ pin_subpackage('liblalburst', exact=True) }}
-        - ligo-segments
         - lscsoft-glue
         - matplotlib-base
         - numpy
