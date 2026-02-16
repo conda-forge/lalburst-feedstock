@@ -5,7 +5,10 @@
 {% set lal_version = "7.7.0" %}
 {% set lalmetaio_version = "4.0.0" %}
 {% set lalsimulation_version = "6.2.0" %}
-{% set swig_version = "3.0.10" %}
+
+# LAL requires downstream packages to be built with the same version of SWIG,
+# so we need to pin it here
+{% set swig_version = "4.4.1" %}
 
 package:
   name: {{ name }}-split
@@ -28,7 +31,7 @@ requirements:
     - make
     - pkg-config >=0.18.0
     - python >=3.5
-    - swig >={{ swig_version }}
+    - swig {{ swig_version }}.*
   host:
     - gsl
     - liblal >={{ lal_version }}
@@ -46,7 +49,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib('c') }}
         - make
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
       host:
         - gsl
         - liblal >={{ lal_version }}
@@ -94,7 +97,7 @@ outputs:
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
         # extras for cross compiling
         - cross-python_{{ target_platform }}  # [build_platform != target_platform]
         - numpy                               # [build_platform != target_platform]
