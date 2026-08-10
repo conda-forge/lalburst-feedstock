@@ -15,7 +15,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 gsl:
-- '2.7'
+- '2.8'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
