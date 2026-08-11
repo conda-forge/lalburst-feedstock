@@ -20,7 +20,7 @@ source:
 
 build:
   error_overlinking: true
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
