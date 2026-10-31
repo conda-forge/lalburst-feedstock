@@ -1,8 +1,7 @@
 schema_version: 1
 
 context:
-  version: "2.0.7"
-  build_number: 4
+  version: "3.0.0"
   # dependencies
   lal_version: 7.7.0
   lalmetaio_version: 4.0.0
@@ -17,10 +16,10 @@ recipe:
 
 source:
   - url: https://software.igwn.org/sources/source/lalsuite/lalburst-${{ version }}.tar.xz
-    sha256: 0192a4aef75b8ef7871f5ad4e3d491b0380557907e7f1a095845369e93268a14
+    sha256: a6664181fd540ecae2d87648d80cba095b2c6aac727692580de4a56082d36d5b
 
 build:
-  number: ${{ build_number }}
+  number: 0
   skip:
     - win
 
