@@ -1,4 +1,4 @@
-# common build options for LALSimulation
+# common build options for LALBurst
 
 # macros
 _make="make -j ${CPU_COUNT} V=1 VERBOSE=1"

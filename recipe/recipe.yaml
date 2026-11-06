@@ -1,0 +1,267 @@
+schema_version: 1
+
+context:
+  version: "2.0.7"
+  build_number: 4
+  # dependencies
+  lal_version: 7.7.0
+  lalmetaio_version: 4.0.0
+  lalsimulation_version: 6.2.0
+  # LAL requires downstream packages to be built with the same version of SWIG,
+  # so we need to pin it here
+  swig_version: 4.4.1
+
+recipe:
+  name: lalburst-split
+  version: ${{ version }}
+
+source:
+  - url: https://software.igwn.org/sources/source/lalsuite/lalburst-${{ version }}.tar.xz
+    sha256: 0192a4aef75b8ef7871f5ad4e3d491b0380557907e7f1a095845369e93268a14
+
+build:
+  number: ${{ build_number }}
+  skip:
+    - win
+
+outputs:
+
+  # -- Staging -----------------------
+
+  - staging:
+      name: lalburst-c-build
+    build:
+      script: build
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - python >=3.6
+        - swig ${{ swig_version }}.*
+      host:
+        - gsl
+        # pin LAL so that every platform builds against the same major version;
+        # LAL 8 builds of the dependencies are not available for all variants
+        - liblal ${{ lal_version }}.*
+        - liblalmetaio >=${{ lalmetaio_version }}
+        - liblalsimulation >=${{ lalsimulation_version }}
+
+  # -- Packages ----------------------
+
+  - package:
+      name: liblalburst
+    inherit: lalburst-c-build
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - include/lal/
+        - lib/liblalburst*
+        - lib/pkgconfig/lalburst*.pc
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+      run_exports:
+        - ${{ pin_subpackage("liblalburst", upper_bound="x") }}
+      run_constraints:
+        - lalburst >=1.5.7
+        - python-lalburst >=1.5.7
+    tests:
+      - package_contents:
+          lib:
+            - lalburst
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalburst
+    about:
+      summary: LSC Algorithm Burst Library shared object libraries
+      description: |
+        The LSC Algorithm Burst Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL Burst library.
+
+  - package:
+      name: python-lalburst
+    inherit:
+      from: lalburst-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - lib/python*/site-packages/
+      script: build-python
+      variant:
+        # use the same keys as liblalburst so that we ensure a unique
+        # python-lalburst build string for each unique liblalburst build
+        use_keys:
+          - gsl
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - gsl
+        - ${{ pin_subpackage("liblalburst", exact=True) }}
+        - lscsoft-glue
+        - numpy
+        - python
+        - python-lal >=${{ lal_version }}
+        - python-lalmetaio >=${{ lalmetaio_version }}
+        - python-lalsimulation >=${{ lalsimulation_version }}
+        - scipy
+        - tqdm
+      run:
+        - igwn-ligolw >=2.1.0
+        - igwn-segments
+        - ${{ pin_subpackage("liblalburst", exact=True) }}
+        - lscsoft-glue
+        - matplotlib-base
+        - python
+        - python-lal >=${{ lal_version }}
+        - python-lalmetaio >=${{ lalmetaio_version }}
+        - python-lalsimulation >=${{ lalsimulation_version }}
+        - scipy
+        - tqdm
+    tests:
+      - python:
+          imports:
+            - lalburst
+            - lalburst.SimBurstUtils
+            - lalburst.SnglBurstUtils
+            - lalburst.binjfind
+            - lalburst.bucluster
+            - lalburst.burca
+            - lalburst.burca_tailor
+            - lalburst.cafe
+            - lalburst.calc_likelihood
+            - lalburst.cs_gamma
+            - lalburst.date
+            - lalburst.offsetvector
+            - lalburst.packing
+            - lalburst.power
+            - lalburst.snglcluster
+            - lalburst.snglcoinc
+            - lalburst.stringutils
+            - lalburst.timeslides
+          pip_check: false
+      - requirements:
+          run:
+            - pytest >=4.0
+        files:
+          source:
+            - test/python/
+        script:
+          - python -m pytest -ra -v test/python
+    about:
+      summary: LSC Algorithm Burst Library Python bindings
+      description: |
+        The LSC Algorithm Burst Library for gravitational wave data analysis.
+        This package contains the Python bindings of the LALBurst C libraries
+        and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the `lalburst` package.
+
+  - package:
+      name: lalburst
+    inherit:
+      from: lalburst-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - bin/
+        - etc/lalburst-user-env.*
+        - share/man/
+      script: build-bin
+      variant:
+        # use the same keys as liblalburst so that we ensure a unique
+        # lalburst build string for each unique liblalburst build
+        use_keys:
+          - gsl
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - help2man >=1.37
+        - make
+        - pkg-config >=0.18.0
+        - sed
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblalburst", exact=True) }}
+        - liblal ${{ lal_version }}.*
+        # needed by ./configure
+        - numpy
+        - python
+        # help2man runs the Python scripts, which need their runtime dependencies
+        - pillow
+        - ${{ pin_subpackage("python-lalburst", exact=True) }}
+      run:
+        - ${{ pin_subpackage("liblalburst", exact=True) }}
+        - pillow
+        - python
+        - ${{ pin_subpackage("python-lalburst", exact=True) }}
+    tests:
+      - python:
+          imports:
+            - lalburst
+          pip_check: false
+      - script:
+          - lalburst_version --verbose
+          # the user environment script rewrites PATH, so check that it still works
+          - bash -c '. "${PREFIX}/etc/lalburst-user-env.sh" && lalburst_version'
+          - lalburst_cluster --help
+          - lalburst_coinc --help
+          - lalburst_cut --help
+          - lalburst_gen_timeslides --help
+          - lalburst_injfind --help
+          - lalburst_inj_pic --help
+          - lalburst_plot_tisi --help
+          - lalburst_power_calc_likelihood --help
+          - lalburst_power_final --help
+          - lalburst_power_meas_likelihood --help
+          - lalburst_power_plot_binj --help
+          - lalburst_power_plot_binjtf --help
+    about:
+      summary: LSC Algorithm Burst Library
+      description: |
+        The LSC Algorithm Burst Library for gravitational wave data analysis.
+        This package contains the runtime tools.
+
+about:
+  summary: LSC Algorithm Burst Library
+  description: |
+    The LSC Algorithm Burst Library for gravitational wave data analysis.
+  homepage: https://wiki.ligo.org/Computing/LALSuite
+  documentation: https://lscsoft.docs.ligo.org/lalsuite/lalburst/
+  repository: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_file: COPYING
+
+extra:
+  feedstock-name: lalburst
+  recipe-maintainers:
+    - duncanmmacleod
+    - skymoo
