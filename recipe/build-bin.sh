@@ -32,6 +32,11 @@ ${SRC_DIR}/configure \
 # patch out dependency_libs from libtool archive to prevent overlinking
 sed -i.tmp '/^dependency_libs/d' lib/liblalburst.la
 
+# copy in the built Python bindings from the installed Python package
+# so that the Python scripts can find them when rendering manuals
+# (bytecode is excluded as it was compiled from the $PREFIX sources)
+rsync -av --exclude='__pycache__' ${SP_DIR}/lalburst python/
+
 # build
 ${_make} -C bin
 

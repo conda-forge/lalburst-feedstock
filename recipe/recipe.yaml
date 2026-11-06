@@ -202,6 +202,7 @@ outputs:
         - help2man >=1.37
         - make
         - pkg-config >=0.18.0
+        - rsync
         - sed
         - swig ${{ swig_version }}.*
         - if: build_platform != target_platform
@@ -229,9 +230,11 @@ outputs:
             - lalburst
           pip_check: false
       - script:
+          # assert that the manuals don't just contain errors
+          - grep -q ModuleNotFoundError ${PREFIX}/share/man/man1/lalburst_*.1 && exit 1
+          - cat "${PREFIX}/share/man/man1/lalburst_cluster.1" | head -n 20
+          # check executables
           - lalburst_version --verbose
-          # the user environment script rewrites PATH, so check that it still works
-          - bash -c '. "${PREFIX}/etc/lalburst-user-env.sh" && lalburst_version'
           - lalburst_cluster --help
           - lalburst_coinc --help
           - lalburst_cut --help
@@ -244,6 +247,8 @@ outputs:
           - lalburst_power_meas_likelihood --help
           - lalburst_power_plot_binj --help
           - lalburst_power_plot_binjtf --help
+          # the user environment script rewrites PATH, so check that it still works
+          - bash -c '. "${PREFIX}/etc/lalburst-user-env.sh" && lalburst_version'
     about:
       summary: LSC Algorithm Burst Library
       description: |
