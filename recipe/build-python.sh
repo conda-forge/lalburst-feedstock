@@ -23,7 +23,7 @@ ${SRC_DIR}/configure \
 ;
 
 # patch out dependency_libs from libtool archive to prevent overlinking
-sed -i.tmp '/^dependency_libs/d' lib/lib${PKG_NAME##*-}.la
+sed -i.tmp '/^dependency_libs/d' lib/liblalburst.la
 
 # build
 ${_make} -C swig LIBS=""
